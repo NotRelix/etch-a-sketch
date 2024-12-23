@@ -26,18 +26,22 @@ function deleteCanvas(canvasSize) {
   }
 }
 
-createCanvas(canvasSize);
+function addPixelEventListener() {
+  const pixels = document.querySelectorAll('.pixel');
+  pixels.forEach(pixel => {
+    pixel.addEventListener('mouseover', handleMouseOver);
+  })
+}
 
-const pixels = document.querySelectorAll('.pixel');
-pixels.forEach(pixel => {
-  pixel.addEventListener('mouseover', handleMouseOver)
-})
+createCanvas(canvasSize);
+addPixelEventListener();
 
 canvasSizeBtn.addEventListener('click', () => {
   const newCanvasSize = +prompt('Enter canvas size');
   if (newCanvasSize > 0 && newCanvasSize <= 100) {
     deleteCanvas(canvasSize);
     createCanvas(newCanvasSize);
+    addPixelEventListener();
     canvasSize = newCanvasSize;
   }
 })
