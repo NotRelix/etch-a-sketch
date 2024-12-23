@@ -1,5 +1,9 @@
 const canvas = document.querySelector('.canvas');
 
+function handleMouseOver(e) {
+  e.target.classList.add('hovered');
+}
+
 for (let row = 0; row < 16; row++) {
   const rowCanvas = document.createElement('div');
   rowCanvas.setAttribute('class', 'row');
@@ -10,3 +14,8 @@ for (let row = 0; row < 16; row++) {
   }
   canvas.appendChild(rowCanvas);
 }
+
+const pixels = document.querySelectorAll('.pixel');
+pixels.forEach(pixel => {
+  pixel.addEventListener('mouseover', handleMouseOver)
+})
