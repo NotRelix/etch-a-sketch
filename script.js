@@ -6,12 +6,18 @@ let canvasSize = 16;
 
 function handleMouseOver(e) {
   let colorArray = [156, 156, 156];
+  let opacity = e.target.style.opacity;
   if (isRandom) {
     colorArray = randomizeColor();
+    opacity = 1;
+  } else {
+    if (opacity) opacity = opacity - 0.1;
+    else opacity = 1;
   }
   e.target.style = `
     background-color: rgb(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]});
     border: 1px solid rgb(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]});
+    opacity: ${opacity};
   `;
 }
 
