@@ -1,10 +1,18 @@
 const canvas = document.querySelector('.canvas');
-const canvasSizeBtn = document.querySelector('button');
+const canvasSizeBtn = document.querySelector('.canvas-size-btn');
+const toggle = document.querySelector('.toggle');
 
 let canvasSize = 16;
 
 function handleMouseOver(e) {
-  e.target.classList.add('hovered');
+  let colorArray = [156, 156, 156];
+  if (isRandom) {
+    colorArray = randomizeColor();
+  }
+  e.target.style = `
+    background-color: rgb(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]});
+    border: 1px solid rgb(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]});
+  `;
 }
 
 function createCanvas(canvasSize) {
@@ -33,6 +41,36 @@ function addPixelEventListener() {
   })
 }
 
+function randomizeColor() {
+  const primary = +randomizePrimary();
+  const secondary = +randomizeSecondary(primary);
+  const colorValue = +randomizeColorValue();
+  let colorArray = [0, 0, 0]
+  colorArray[primary - 1] = 255;
+  colorArray[secondary - 1] = colorValue;
+  return colorArray;
+}
+
+function randomizePrimary() {
+  return Math.floor(Math.random() * 3) + 1;
+}
+
+function randomizeSecondary(primary) {
+  let secondary = Math.floor(Math.random() * 2) + 1;
+  if (primary === 1) {
+    if (secondary === 1) secondary = 2;
+    else secondary = 3;
+  } else if (primary === 2) {
+    if (secondary === 2) secondary = 3;
+  }
+  return secondary;
+}
+
+function randomizeColorValue() {
+  return Math.floor(Math.random() * 256);
+}
+
+let isRandom = false;
 createCanvas(canvasSize);
 addPixelEventListener();
 
@@ -44,4 +82,15 @@ canvasSizeBtn.addEventListener('click', () => {
     addPixelEventListener();
     canvasSize = newCanvasSize;
   }
-})
+});
+
+toggle.addEventListener('click', (e) => {
+  const value = e.target.textContent.toLowerCase()
+  if (value === 'randomize') {
+    e.target.textContent = 'Normal';
+    isRandom = true;
+  } else if (value === 'normal') {
+    e.target.textContent = 'Randomize';
+    isRandom = false;
+  }
+});

@@ -16,7 +16,6 @@ button {
     padding: 16px;
     color: rgb(223, 223, 223);
     font-weight: bold;
-    border: none;
     cursor: pointer;
     align-self: flex-start;
 }
@@ -37,6 +36,14 @@ button {
 .content {
     display: flex;
     flex-direction: column;
+}
+
+.buttons {
+    display: flex;
+}
+
+.toggle {
+    width: 120px;
 }
 
 .canvas {
